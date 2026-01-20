@@ -1,11 +1,14 @@
 import {StyleSheet} from "react-native";
 
-export const colors = {
+const colors = {
     blue: "blue",
-    white: "white",
+    green: "green",
     black: "black",
     gray: "gray",
+    white: "white",
+    purple: "purple",
 }
+
 export const allScreenStyles = StyleSheet.create({
     
     container: {
@@ -13,7 +16,7 @@ export const allScreenStyles = StyleSheet.create({
         padding: 16,
         backgroundColor: colors.gray,
     },
-    
+
     card:{
         margin: 4,
         padding: 16,

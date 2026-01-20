@@ -1,6 +1,6 @@
-export function helloWorld() {
-	return "Hello World";
+export function friendResquest() {
+	return "Request";
 }
 export function textMessage(){
-    return "Welcome to GymSpotter!";
+    return "Status";
 }

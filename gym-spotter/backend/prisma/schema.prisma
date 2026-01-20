@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+
+}
+
+enum FriendRequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  CANCELED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+
+  sentFriendRequests     FriendRequest[] @relation("SentFriendRequests")
+  receivedFriendRequests FriendRequest[] @relation("ReceivedFriendRequests")
+}
+
+model FriendRequest {
+  id          String              @id @default(uuid())
+  fromUserId  String
+  toUserId    String
+  status      FriendRequestStatus @default(PENDING)
+  createdAt   DateTime            @default(now())
+  respondedAt DateTime?
+
+  fromUser User @relation("SentFriendRequests", fields: [fromUserId], references: [id])
+  toUser   User @relation("ReceivedFriendRequests", fields: [toUserId], references: [id])
+
+  @@index([toUserId, status])
+  @@index([fromUserId, toUserId, status])
+}
+
+model Friendship {
+  // Guarda ordenado (userAId < userBId) para garantir unicidade
+  id        String   @id
+  userAId   String
+  userBId   String
+  createdAt DateTime @default(now())
+
+  @@unique([userAId, userBId])
+  @@index([userAId])
+  @@index([userBId])
+}
